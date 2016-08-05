@@ -1,0 +1,128 @@
+#!/usr/bin/env python
+
+import signal
+import gi
+import os
+import json
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, Gdk, Gio, Pango
+from subprocess import check_output
+
+
+class pwgenGUI:
+    def __init__(self):
+        self.config_dir = os.path.expanduser('~/.config/pwgenGUI')
+        self.settings_file = self.config_dir + '/settings.json'
+        self.gladefile = "pwgenGUI.glade"
+        self.builder = Gtk.Builder()
+        self.builder.add_from_file(self.gladefile)
+        self.builder.connect_signals(self)
+        self.window_main = self.builder.get_object("pwgenGUI")
+        self.aboutdialog = self.builder.get_object("aboutdialog")
+        self.password_input = self.builder.get_object("password_input")
+        self.password_input.modify_font(Pango.FontDescription('Ubuntu Mono 18'))
+        self.chars = self.builder.get_object("chars")
+        self.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD)
+        self.toolbar = self.builder.get_object("toolbar")
+        self.button_copy = self.builder.get_object("toolbutton_copy")
+        self.menu_copy = self.builder.get_object("menu_copy")
+        self.option_caps = self.builder.get_object("switch1")
+        self.option_nums = self.builder.get_object("switch2")
+        self.option_specials = self.builder.get_object("switch3")
+        self.toolbar.get_style_context().add_class(Gtk.STYLE_CLASS_PRIMARY_TOOLBAR)
+        self.toolbar.set_hexpand(True)
+        self.settings_load(self)
+        self.genPassword(self)
+        self.window_main.show()
+
+    def settings_load(self, object):
+        if not os.path.isdir(self.config_dir):
+            os.mkdir(self.config_dir)
+            settings = {
+                'chars': '12',
+                'caps': True,
+                'nums': True,
+                'specials': True
+            }
+            settings = json.dumps(settings)
+            f = open(self.settings_file, 'w')
+            f.write(settings)
+            f.close()
+
+        f = open(self.settings_file, 'r')
+        settings = f.read()
+        f.close()
+        settings = json.loads(settings)
+        settings = settings
+        self.chars.set_text(settings['chars'])
+        self.option_caps.set_state(settings['caps'])
+        self.option_nums.set_state(settings['nums'])
+        self.option_specials.set_state(settings['specials'])
+
+    def settings_write(self):
+        settings = {
+            'chars': self.chars.get_text(),
+            'caps': self.option_caps.get_state(),
+            'nums': self.option_nums.get_state(),
+            'specials': self.option_specials.get_state()
+        }
+        settings = json.dumps(settings)
+        f = open(self.settings_file, 'w')
+        f.write(settings)
+        f.close()
+
+    def on_menu_about_activate(self, button):
+        response = self.aboutdialog.run()
+        if response == -4:
+            self.aboutdialog.hide()
+
+    def on_btn_new_clicked(self, button):
+        self.genPassword(self)
+
+    def on_password_input_changed(self, button):
+        password = self.password_input.get_text()
+        if len(password) == 0:
+            self.button_copy.set_sensitive(False)
+            self.menu_copy.set_sensitive(False)
+        else:
+            self.button_copy.set_sensitive(True)
+            self.menu_copy.set_sensitive(True)
+
+    def on_btn_copy_clicked(self, button):
+        password = self.password_input.get_text()
+        if len(password) > 0:
+            self.clipboard.set_text(password, -1)
+
+    def on_pwgenGUI_destroy(self, object):
+        Gtk.main_quit()
+
+    def genPassword(self, object):
+        self.settings_write()
+        chars = self.chars.get_text()
+        option_caps = self.option_caps.get_state()
+        option_nums = self.option_nums.get_state()
+        option_specials = self.option_specials.get_state()
+
+        options = '-'
+
+        if option_caps:
+            options += 'c'
+        else:
+            options += 'A'
+
+        if option_nums:
+            options += 'n'
+        else:
+            options += '0'
+
+        if option_specials:
+            options += 'y'
+
+        password = check_output(["pwgen", options, chars, "1"]).rstrip()
+        self.password_input.set_text(password)
+
+signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+if __name__ == "__main__":
+    main = pwgenGUI()
+    Gtk.main()
