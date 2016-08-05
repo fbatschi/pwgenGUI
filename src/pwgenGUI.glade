@@ -134,6 +134,7 @@
               <object class="GtkToolButton" id="toolbutton_new">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Generate new password</property>
                 <property name="label" translatable="yes">New</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-new</property>
@@ -148,6 +149,7 @@
               <object class="GtkToolButton" id="toolbutton_copy">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="tooltip_text" translatable="yes">Copy password to clipboard</property>
                 <property name="label" translatable="yes">Copy</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-copy</property>
@@ -170,6 +172,8 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="border_width">20</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">20</property>
             <child>
               <object class="GtkEntry" id="password_input">
                 <property name="name">password_input</property>
@@ -189,6 +193,26 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStatusbar" id="statusbar">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="margin_left">10</property>
+            <property name="margin_right">10</property>
+            <property name="margin_start">10</property>
+            <property name="margin_end">10</property>
+            <property name="margin_top">6</property>
+            <property name="margin_bottom">6</property>
+            <property name="orientation">vertical</property>
+            <property name="spacing">2</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
             <property name="position">3</property>
           </packing>
         </child>
@@ -309,6 +333,7 @@
           <packing>
             <property name="expand">False</property>
             <property name="fill">True</property>
+            <property name="pack_type">end</property>
             <property name="position">4</property>
           </packing>
         </child>

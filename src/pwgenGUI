@@ -18,6 +18,8 @@ class pwgenGUI:
         self.builder.add_from_file(self.gladefile)
         self.builder.connect_signals(self)
         self.window_main = self.builder.get_object("pwgenGUI")
+        self.statusbar = self.builder.get_object("statusbar")
+        self.statusbar_id = self.statusbar.get_context_id("pwgenGUI")
         self.aboutdialog = self.builder.get_object("aboutdialog")
         self.password_input = self.builder.get_object("password_input")
         self.password_input.modify_font(Pango.FontDescription('Ubuntu Mono 18'))
@@ -100,6 +102,8 @@ class pwgenGUI:
         f = open(self.settings_file, 'w')
         f.write(settings)
         f.close()
+        self.statusbar.pop(self.statusbar_id)
+        # self.genPassword(self)
 
     def on_menu_about_activate(self, button):
         response = self.aboutdialog.run()
@@ -110,6 +114,7 @@ class pwgenGUI:
         self.genPassword(self)
 
     def on_password_input_changed(self, button):
+        self.statusbar.pop(self.statusbar_id)
         password = self.password_input.get_text()
         if len(password) == 0:
             self.button_copy.set_sensitive(False)
@@ -122,6 +127,7 @@ class pwgenGUI:
         password = self.password_input.get_text()
         if len(password) > 0:
             self.clipboard.set_text(password, -1)
+            self.statusbar.push(self.statusbar_id, "Password copied to clipboard!")
 
     def on_pwgenGUI_destroy(self, object):
         Gtk.main_quit()
