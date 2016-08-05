@@ -208,6 +208,7 @@
                 <property name="input_purpose">digits</property>
                 <property name="adjustment">adjustment1</property>
                 <property name="value">12</property>
+                <signal name="value-changed" handler="on_chars_value_changed" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -269,6 +270,7 @@
                 <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="state">True</property>
+                <signal name="state-set" handler="on_switch1_state_set" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -282,6 +284,7 @@
                 <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="state">True</property>
+                <signal name="state-set" handler="on_switch2_state_set" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>
@@ -295,6 +298,7 @@
                 <property name="halign">start</property>
                 <property name="active">True</property>
                 <property name="state">True</property>
+                <signal name="state-set" handler="on_switch3_state_set" swapped="no"/>
               </object>
               <packing>
                 <property name="left_attach">0</property>

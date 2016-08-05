@@ -59,13 +59,43 @@ class pwgenGUI:
         self.option_nums.set_state(settings['nums'])
         self.option_specials.set_state(settings['specials'])
 
-    def settings_write(self):
+    def on_chars_value_changed(self, object):
         settings = {
             'chars': self.chars.get_text(),
             'caps': self.option_caps.get_state(),
             'nums': self.option_nums.get_state(),
             'specials': self.option_specials.get_state()
         }
+        self.settings_write(self, settings)
+
+    def on_switch1_state_set(self, object, data=''):
+        settings = {
+            'chars': self.chars.get_text(),
+            'caps': data,
+            'nums': self.option_nums.get_state(),
+            'specials': self.option_specials.get_state()
+        }
+        self.settings_write(self, settings)
+
+    def on_switch2_state_set(self, object, data=''):
+        settings = {
+            'chars': self.chars.get_text(),
+            'caps': self.option_caps.get_state(),
+            'nums': data,
+            'specials': self.option_specials.get_state()
+        }
+        self.settings_write(self, settings)
+
+    def on_switch3_state_set(self, object, data=''):
+        settings = {
+            'chars': self.chars.get_text(),
+            'caps': self.option_caps.get_state(),
+            'nums': self.option_nums.get_state(),
+            'specials': data
+        }
+        self.settings_write(self, settings)
+
+    def settings_write(self, object, settings):
         settings = json.dumps(settings)
         f = open(self.settings_file, 'w')
         f.write(settings)
@@ -97,7 +127,6 @@ class pwgenGUI:
         Gtk.main_quit()
 
     def genPassword(self, object):
-        self.settings_write()
         chars = self.chars.get_text()
         option_caps = self.option_caps.get_state()
         option_nums = self.option_nums.get_state()
