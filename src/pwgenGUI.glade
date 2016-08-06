@@ -350,7 +350,7 @@
     <property name="type_hint">dialog</property>
     <property name="transient_for">pwgenGUI</property>
     <property name="program_name">pwgenGUI</property>
-    <property name="version">Version 20160704</property>
+    <property name="version">Version 20160806</property>
     <property name="copyright" translatable="yes">Philip Newborough &lt;corenominal@corenominal.org&gt;</property>
     <property name="comments" translatable="yes">A simple graphical user interface for pwgen.</property>
     <property name="website">https://corenominal.org/projects/pwgengui</property>

@@ -1,3 +1,10 @@
+pwgengui (20160806) xenial; urgency=low
+
+  * Bump version.
+  * Update debian/control.
+
+ -- Philip Newborough <corenominal@corenominal.org>  Sat, 6 Aug 2016 10:08:22 +0100
+
 pwgengui (20160704) xenial; urgency=low
 
   * Initial release.
