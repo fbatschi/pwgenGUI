@@ -1,4 +1,4 @@
-pwgengui (20160806-1) xenial; urgency=low
+pwgengui (20160806.1) xenial; urgency=low
 
   * Remove git control dir from build
 
