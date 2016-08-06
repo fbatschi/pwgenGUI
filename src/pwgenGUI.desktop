@@ -1,0 +1,8 @@
+[Desktop Entry]
+Icon=pwgenGUI
+Type=Application
+Name=pwgenGUI
+Comment=A little application to help you to easily generate secure random passwords.
+Exec=/usr/bin/pwgenGUI
+StartupNotify=true
+Terminal=false

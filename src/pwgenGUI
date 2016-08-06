@@ -13,7 +13,7 @@ class pwgenGUI:
     def __init__(self):
         self.config_dir = os.path.expanduser('~/.config/pwgenGUI')
         self.settings_file = self.config_dir + '/settings.json'
-        self.gladefile = "pwgenGUI.glade"
+        self.gladefile = "/usr/share/pwgenGUI/pwgenGUI.glade"
         self.builder = Gtk.Builder()
         self.builder.add_from_file(self.gladefile)
         self.builder.connect_signals(self)

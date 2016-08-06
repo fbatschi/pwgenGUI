@@ -1,0 +1,16 @@
+Source: pwgengui
+Section: misc
+Priority: extra
+Maintainer: Philip Newborough <corenominal@corenominal.org>
+Build-Depends: debhelper (>= 9.0.0)
+Standards-Version: 3.9.7
+Homepage: https://corenominal.org/projects/pwgengui/
+
+Package: pwgengui
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python, python-gi, pwgen
+Description: Easily generate secure random passwords.
+ A simple little Python GTK GUI application to help you easily
+ generate secure random password. Uses pwgen to generate the
+ passwords.
+ .
