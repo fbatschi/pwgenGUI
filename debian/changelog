@@ -1,3 +1,9 @@
+pwgengui (20160806-1) xenial; urgency=low
+
+  * Remove git control dir from build
+
+ -- Philip Newborough <corenominal@corenominal.org>  Sat, 6 Aug 2016 10:32:04 +0100
+
 pwgengui (20160806) xenial; urgency=low
 
   * Bump version.
