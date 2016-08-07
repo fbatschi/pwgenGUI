@@ -1,3 +1,9 @@
+pwgengui (20160807) xenial; urgency=low
+
+  * Add gir1.2-gtk-3.0, gir1.2-pango-1.0 to dependencies.
+
+ -- Philip Newborough <corenominal@corenominal.org>  Sun, 7 Aug 2016 17:07:32 +0100
+
 pwgengui (20160806.1) xenial; urgency=low
 
   * Remove git control dir from build
