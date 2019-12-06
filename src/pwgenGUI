@@ -35,13 +35,33 @@ class pwgenGUI:
         self.toolbar.set_hexpand(True)
         self.settings_load(self)
         self.genPassword(self)
+        self.window_main.connect("key-press-event",self._key_press_event)
         self.window_main.show()
+
+    def _key_press_event(self,widget,event):
+        keyval = event.keyval
+        keyval_name = Gdk.keyval_name(keyval)
+        state = event.state
+        ctrl = (state & Gdk.ModifierType.CONTROL_MASK)
+        if ctrl and keyval_name == 'r':
+                self.genPassword(self)
+        elif ctrl and keyval_name == 'w':
+                print("w pressed")
+                Gtk.main_quit()
+        elif ctrl and keyval_name == 'c':
+                password = self.password_input.get_text()
+                if len(password) > 0:
+                    self.clipboard.set_text(password, -1)
+                    self.statusbar.push(self.statusbar_id, "Password copied to clipboard!")
+        else:
+	        return False
+        return True
 
     def settings_load(self, object):
         if not os.path.isdir(self.config_dir):
             os.mkdir(self.config_dir)
             settings = {
-                'chars': '12',
+                'chars': '20',
                 'caps': True,
                 'nums': True,
                 'specials': True
@@ -154,7 +174,9 @@ class pwgenGUI:
             options += 'y'
 
         password = check_output(["pwgen", options, chars, "1"]).rstrip()
-        self.password_input.set_text(password)
+        self.password_input.set_text(password.decode())
+        if len(password) > 0:
+            self.clipboard.set_text(password.decode(), -1)
 
 signal.signal(signal.SIGINT, signal.SIG_DFL)
 
